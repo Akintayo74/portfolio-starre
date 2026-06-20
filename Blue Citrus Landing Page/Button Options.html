@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Button Options · Akintayo</title>
+<link rel="stylesheet" href="portfolio.css" />
+<style>
+  body { padding: 0; }
+  .lab { max-width: 1080px; margin: 0 auto; padding: 64px 40px 100px; }
+  .lab-head { border-bottom: 1px solid var(--line); padding-bottom: 22px; margin-bottom: 8px; }
+  .lab-head h1 { font-size: 30px; letter-spacing: -0.03em; margin: 0; font-weight: 600; }
+  .lab-head p { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--mute); margin: 12px 0 0; }
+
+  .group { padding: 40px 0; border-bottom: 1px solid var(--line); }
+  .group > .gh { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); margin-bottom: 26px; }
+  .row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 28px; }
+  .opt { }
+  .opt .tag { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); margin-bottom: 4px; }
+  .opt .desc { font-size: 13.5px; color: var(--ink-55); line-height: 1.5; margin-bottom: 16px; max-width: 32ch; }
+  .opt .pair { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+  /* slowed shimmer (1.5s) used by the marked options */
+  .sh { position: relative; overflow: hidden; }
+  @media (prefers-reduced-motion: no-preference) {
+    .sh::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+      transform: translateX(-135%);
+    }
+    .sh:hover::after, .sh:focus-visible::after { animation: sweep 1.5s cubic-bezier(0.4,0,0.2,1); }
+  }
+  @keyframes sweep { from { transform: translateX(-135%); } to { transform: translateX(135%); } }
+
+  /* ---- PRIMARY shade options ---- */
+  .p-ink    { background:#111110; color:#fff; } .p-ink:hover    { background:#000; }
+  .p-graph  { background:#2a2a27; color:#fff; } .p-graph:hover  { background:#141413; }
+  .p-char   { background:#3a3937; color:#fff; } .p-char:hover   { background:#222220; }
+  .p-lift   { background:#1a1a17; color:#fff; } .p-lift:hover   { background:#33332f; }
+
+  /* ---- SECONDARY hover options (base = ghost) ---- */
+  .s-base { background: transparent; color: var(--ink); }
+  .s-wash:hover   { background: var(--soft); color: var(--ink); border-color: var(--ink); }
+  .s-softer:hover { background: var(--softer); color: var(--ink); border-color: var(--ink); }
+  .s-graph:hover  { background: #2a2a27; color: #fff; border-color: #2a2a27; }
+  .s-darken:hover { background: transparent; color: var(--ink); border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .s-base { border-color: var(--line); }
+</style>
+</head>
+<body>
+<div class="lab">
+  <div class="lab-head">
+    <h1>Button options</h1>
+    <p>Hover each to feel it · monochrome only · shimmer slowed to 1.5s</p>
+  </div>
+
+  <!-- PRIMARY -->
+  <section class="group">
+    <div class="gh">Primary fill — pick a shade</div>
+    <div class="row">
+      <div class="opt">
+        <div class="tag">A · Ink (current)</div>
+        <div class="desc">Near-black, hovers to pure #000. The current default.</div>
+        <div class="pair"><a class="btn sh p-ink" href="#">Get in touch</a></div>
+      </div>
+      <div class="opt">
+        <div class="tag">B · Graphite ← my pick</div>
+        <div class="desc">Soft graphite base that deepens toward black on hover. Crafted, less default.</div>
+        <div class="pair"><a class="btn sh p-graph" href="#">Get in touch</a></div>
+      </div>
+      <div class="opt">
+        <div class="tag">C · Charcoal</div>
+        <div class="desc">Lighter still — reads as dark grey rather than black. Gentler contrast.</div>
+        <div class="pair"><a class="btn sh p-char" href="#">Get in touch</a></div>
+      </div>
+      <div class="opt">
+        <div class="tag">D · Lift</div>
+        <div class="desc">Dark base that <em>lightens</em> on hover — an upward, glowing feel.</div>
+        <div class="pair"><a class="btn sh p-lift" href="#">Get in touch</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECONDARY -->
+  <section class="group">
+    <div class="gh">Secondary hover — replacing the black fill</div>
+    <div class="row">
+      <div class="opt">
+        <div class="tag">1 · Soft wash ← my pick</div>
+        <div class="desc">Light grey fill, text stays dark, border darkens to ink. Quiet and editorial.</div>
+        <div class="pair"><a class="btn s-base s-wash" href="#">See more work</a></div>
+      </div>
+      <div class="opt">
+        <div class="tag">2 · Softer wash</div>
+        <div class="desc">Same idea, a half-step deeper grey on the fill.</div>
+        <div class="pair"><a class="btn s-base s-softer" href="#">See more work</a></div>
+      </div>
+      <div class="opt">
+        <div class="tag">3 · Graphite fill</div>
+        <div class="desc">Inverts to graphite (not pure black) with white text. Bolder pairing.</div>
+        <div class="pair"><a class="btn s-base s-graph" href="#">See more work</a></div>
+      </div>
+      <div class="opt">
+        <div class="tag">4 · Border darken</div>
+        <div class="desc">No fill at all — just the hairline thickening to ink. Most restrained.</div>
+        <div class="pair"><a class="btn s-base s-darken" href="#">See more work</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBINED PREVIEW -->
+  <section class="group" style="border-bottom:0;">
+    <div class="gh">My recommended pairing, together</div>
+    <div class="pair" style="gap:14px;">
+      <a class="btn sh p-graph" href="#">Get in touch</a>
+      <a class="btn s-base s-wash" href="#">See more work</a>
+    </div>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blue Citrus — Iteration Notes</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --ink: #1A1A1A;
+    --muted: #6B6B68;
+    --accent: #2B4A8B;
+    --rule: #EFEDE7;
+    --serif-display: 'General Sans', ui-sans-serif, system-ui, sans-serif;
+    --sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .doc {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+  h1 {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: 36px;
+    letter-spacing: -0.022em;
+    line-height: 1.1;
+    margin: 0 0 12px;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: 17px;
+    margin: 0 0 64px;
+    max-width: 600px;
+  }
+  h2 {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.014em;
+    margin: 72px 0 8px;
+  }
+  h2 .num {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 13px;
+    margin-right: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    vertical-align: 2px;
+  }
+  h3 {
+    font-family: var(--serif-display);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    margin: 28px 0 8px;
+    color: var(--ink);
+  }
+  p {
+    color: var(--ink);
+    margin: 0 0 14px;
+    text-wrap: pretty;
+    max-width: 640px;
+  }
+  p.note {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  ul {
+    margin: 0 0 14px;
+    padding-left: 18px;
+    max-width: 640px;
+  }
+  ul li {
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .verdict {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+  .verdict.yes  { background: #E6EBF5; color: var(--accent); }
+  .verdict.no   { background: #F2F0EB; color: var(--muted); }
+  .verdict.try  { background: #F2EBE0; color: #8B6A2B; }
+
+  /* Side-by-side prototype frames */
+  .specimen {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--bg);
+    margin: 16px 0 24px;
+    overflow: hidden;
+  }
+  .specimen-head {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--rule);
+    background: #fff;
+  }
+  .specimen-body {
+    padding: 56px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ——— Flow illustration (shared by examples) ——— */
+  .flow { width: 360px; max-width: 100%; aspect-ratio: 360 / 140; }
+  .flow-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .flow-track {
+    fill: none; stroke: #D7D5CF; stroke-width: 1;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .flow-line {
+    fill: none; stroke: var(--accent); stroke-width: 1.4;
+    stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 10px, 1000px;
+  }
+  .flow-line.one   { stroke-dashoffset: -30px; }
+  .flow-line.two   { stroke-dashoffset: -50px; }
+  .flow-line.three { stroke-dashoffset: -40px; }
+  .flow-node {
+    fill: var(--bg); stroke: var(--ink); stroke-width: 1;
+  }
+  .flow-glyph {
+    stroke: var(--ink); stroke-width: 1; stroke-linecap: round;
+    opacity: 0.4;
+  }
+  .flow-label {
+    font-family: var(--mono);
+    font-size: 7.5px;
+    fill: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .flow-label.engine { fill: var(--accent); opacity: 0.9; }
+
+  @keyframes flow-grow {
+    from { stroke-dasharray: 5px, 1000px; }
+    to   { stroke-dasharray: 22px, 1000px; }
+  }
+  @keyframes flow-circuit {
+    from { stroke-dashoffset: 0px; }
+    to   { stroke-dashoffset: calc(var(--total-length) * -1); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-line {
+      animation:
+        flow-circuit var(--circuit-duration, 3000ms) linear infinite var(--circuit-delay, 0ms) backwards,
+        flow-grow var(--grow-delay, 4000ms) ease-in-out infinite alternate;
+    }
+    .flow.is-randomised .flow-line {
+      animation: none;
+    }
+  }
+
+  /* ——— Examples (rotation specimens) ——— */
+  .examples-fade,
+  .examples-scroll {
+    height: 28px;
+    position: relative;
+    width: 100%;
+    text-align: center;
+  }
+  .examples-fade .ex {
+    position: absolute; inset: 0;
+    font-size: 16px; color: var(--muted);
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+  .examples-fade .ex.is-visible { opacity: 1; }
+
+  .examples-scroll {
+    overflow: hidden;
+  }
+  .examples-scroll .ex {
+    position: absolute; inset: 0;
+    font-size: 16px; color: var(--muted);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 600ms cubic-bezier(.32,.72,.24,1), opacity 600ms ease;
+  }
+  .examples-scroll .ex.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .examples-scroll .ex.is-leaving {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  /* ——— Spacing test (pointer → SVG) ——— */
+  .spacing-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .spacing-stack .pointer {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .gap-marker {
+    align-self: stretch;
+    border-left: 1px dashed #C9C7C0;
+    margin-left: 12px;
+    padding: 4px 0 4px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  pre.code {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 14px 16px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    overflow-x: auto;
+    margin: 8px 0 16px;
+    max-width: 640px;
+  }
+  pre.code .c { color: var(--muted); }
+  pre.code .k { color: var(--accent); }
+
+  hr.rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 80px 0 0;
+  }
+
+  .tip {
+    background: #fff;
+    border-left: 2px solid var(--accent);
+    padding: 12px 16px;
+    margin: 12px 0 16px;
+    font-size: 14px;
+    color: var(--ink);
+    max-width: 640px;
+  }
+</style>
+</head>
+<body>
+
+<main class="doc">
+  <h1>Blue Citrus — iteration notes</h1>
+  <p class="lede">
+    Answers to your three questions, with side-by-side specimens you can feel,
+    then a short list of small things I'd touch before you ship.
+  </p>
+
+  <div id="root"></div>
+</main>
+
+<script type="text/babel">
+const EXAMPLES = [
+  'Save 10% of every income, automatically.',
+  'Split rent between flatmates on the 1st.',
+  "Send school fees to three children's schools each term.",
+  'Pay your team on the 25th.',
+  'Set aside tithe before you spend.',
+];
+
+/* Flow illustration — variant A: deterministic (your current) */
+function FlowIllo({ labeled, randomised = false }) {
+  const refs = [React.useRef(null), React.useRef(null), React.useRef(null)];
+  React.useEffect(() => {
+    if (randomised) {
+      // Randomised mode: each line drives itself via rAF, with stratified
+      // initial offsets, ±15% duration jitter, and 400-1200ms inter-fire pauses.
+      const cancellers = [];
+      refs.forEach((ref, i) => {
+        const path = ref.current; if (!path) return;
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = `12px ${length + 20}px`;
+        path.style.strokeDashoffset = `${length}px`;
+        let stopped = false;
+        function runOnce() {
+          if (stopped) return;
+          // Physically-honest base duration scaled by path length, ±15% jitter
+          const baseDuration = 1800 + length * 4;
+          const duration = baseDuration * (0.85 + Math.random() * 0.3);
+          const pauseAfter = 400 + Math.random() * 800;
+          const start = performance.now();
+          function frame(now) {
+            if (stopped) return;
+            const t = Math.min(1, (now - start) / duration);
+            // Subtle ease-in-out so the head doesn't whip into the rest pause
+            const eased = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+            path.style.strokeDashoffset = `${length - (length + 20) * eased}px`;
+            // Breath: dim slightly past the apex of motion
+            const breath = 0.65 + 0.35 * Math.sin(t * Math.PI);
+            path.style.opacity = breath;
+            if (t < 1) {
+              requestAnimationFrame(frame);
+            } else {
+              path.style.opacity = 0.65;
+              const t2 = setTimeout(runOnce, pauseAfter);
+              cancellers.push(() => clearTimeout(t2));
+            }
+          }
+          requestAnimationFrame(frame);
+        }
+        // Stratified initial start: each line gets its own third of a 1500ms window
+        const initialDelay = (i * 500) + Math.random() * 500;
+        const t0 = setTimeout(runOnce, initialDelay);
+        cancellers.push(() => { stopped = true; clearTimeout(t0); });
+      });
+      return () => cancellers.forEach(c => c());
+    }
+    // Deterministic CSS-driven mode
+    refs.forEach((ref, i) => {
+      const path = ref.current; if (!path) return;
+      const total = path.getTotalLength();
+      path.style.setProperty('--total-length', total + 'px');
+      path.style.setProperty('--circuit-duration', Math.round(total * 20) + 'ms');
+      path.style.setProperty('--circuit-delay', Math.floor(Math.random() * 500 + i * 280) + 'ms');
+      path.style.setProperty('--grow-delay', Math.floor(Math.random() * 2500 + 2400) + 'ms');
+    });
+  }, [randomised]);
+  return (
+    <div className={"flow" + (randomised ? " is-randomised" : "")} aria-hidden="true">
+      <svg className="flow-svg" viewBox="0 0 360 140" fill="none" preserveAspectRatio="xMidYMid meet">
+        <path className="flow-track" d="M 44 70 L 248 70 L 248 24 L 316 24" />
+        <path className="flow-track" d="M 44 70 L 316 70" />
+        <path className="flow-track" d="M 44 70 L 248 70 L 248 116 L 316 116" />
+        <path ref={refs[0]} className="flow-line one"   d="M 44 70 L 248 70 L 248 24 L 316 24" />
+        <path ref={refs[1]} className="flow-line two"   d="M 44 70 L 316 70" />
+        <path ref={refs[2]} className="flow-line three" d="M 44 70 L 248 70 L 248 116 L 316 116" />
+        <rect className="flow-node" x="20" y="58" width="24" height="24" rx="1.5" />
+        <rect className="flow-node" x="168" y="58" width="24" height="24" rx="1.5" />
+        <line className="flow-glyph" x1="174" y1="65" x2="186" y2="65" />
+        <line className="flow-glyph" x1="174" y1="70" x2="186" y2="70" />
+        <line className="flow-glyph" x1="174" y1="75" x2="186" y2="75" />
+        <rect className="flow-node" x="316" y="12"  width="24" height="24" rx="1.5" />
+        <rect className="flow-node" x="316" y="58"  width="24" height="24" rx="1.5" />
+        <rect className="flow-node" x="316" y="104" width="24" height="24" rx="1.5" />
+        {labeled && (
+          <g>
+            <text className="flow-label" x="32"  y="98" textAnchor="middle">income</text>
+            <text className="flow-label engine" x="180" y="98" textAnchor="middle">blue citrus</text>
+            <text className="flow-label" x="328" y="48" textAnchor="middle">savings</text>
+            <text className="flow-label" x="328" y="94" textAnchor="middle">spend</text>
+            <text className="flow-label" x="328" y="140" textAnchor="middle">tithe</text>
+          </g>
+        )}
+      </svg>
+    </div>
+  );
+}
+
+/* Crossfade rotator (your current) */
+function ExamplesFade() {
+  const [i, setI] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => setI((n) => (n + 1) % EXAMPLES.length), 3400);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="examples-fade" aria-live="polite">
+      {EXAMPLES.map((t, idx) => (
+        <div key={idx} className={"ex" + (idx === i ? " is-visible" : "")}>{t}</div>
+      ))}
+    </div>
+  );
+}
+
+/* Scroll-up rotator (the one you proposed) */
+function ExamplesScroll() {
+  const [i, setI] = React.useState(0);
+  const [prev, setPrev] = React.useState(null);
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      setPrev(i);
+      setI((n) => (n + 1) % EXAMPLES.length);
+    }, 3400);
+    return () => clearInterval(id);
+  }, [i]);
+  return (
+    <div className="examples-scroll" aria-live="polite">
+      {EXAMPLES.map((t, idx) => {
+        let cls = "ex";
+        if (idx === i) cls += " is-visible";
+        else if (idx === prev) cls += " is-leaving";
+        return <div key={idx} className={cls}>{t}</div>;
+      })}
+    </div>
+  );
+}
+
+function Specimen({ title, children }) {
+  return (
+    <div className="specimen">
+      <div className="specimen-head">{title}</div>
+      <div className="specimen-body">{children}</div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <React.Fragment>
+
+      {/* ——————————— Q1: Should the engine node be labeled? ——————————— */}
+      <h2><span className="num">01</span>Should the centre node be labeled “Blue Citrus”?</h2>
+      <span className="verdict try">My take · Yes — but quietly</span>
+      <p>
+        Right now the node reads as <em>generic processor</em>. Without a label it relies on the
+        viewer to infer that the middle box is the product — which is exactly the inference the
+        page is trying to make for them. A 8–9px mono label sitting just below the node, in the
+        accent blue, does three good things:
+      </p>
+      <ul>
+        <li>names the actor performing the rule (so the headline's "the way <em>you</em> decide" lands harder)</li>
+        <li>gives the illustration a quiet legend without committing to verbose labels everywhere</li>
+        <li>lets the source/destination nodes stay unlabeled — which is correct, because they're <em>your</em> circumstances, not ours to name</li>
+      </ul>
+
+      <div className="grid-2">
+        <Specimen title="A · Current — no labels">
+          <FlowIllo labeled={false} />
+        </Specimen>
+        <Specimen title="B · Engine labeled (recommended)">
+          <FlowIllo labeled={true} />
+        </Specimen>
+      </div>
+
+      <p className="note">
+        I included faint source/destination labels in B too — see how it tips? Too explanatory.
+        I'd label the engine only, drop the rest. Code:
+      </p>
+      <pre className="code">{`// below the engine node, centred
+<text className="flow-label engine" x="180" y="98" textAnchor="middle">
+  blue citrus
+</text>
+
+/* css */
+.flow-label.engine {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  fill: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}`}</pre>
+
+      <hr className="rule" />
+
+      {/* ——————————— Q2: Hero pointer → SVG spacing ——————————— */}
+      <h2><span className="num">02</span>Is the gap between the hero pointer and the SVG too much?</h2>
+      <span className="verdict try">My take · Yes, slightly — but the fix isn't shrinking it</span>
+      <p>
+        The 86vh hero + 168px section-gap creates a "sea of nothing" on tall displays. But
+        shrinking the hero or the gap fights the brief — the empty bottom third is doing
+        intentional work.
+      </p>
+      <p>The better fix is to give the void a quiet anchor. Three options:</p>
+
+      <h3>Option A — Move the pointer down</h3>
+      <p>
+        Anchor the pointer to the bottom of the hero (not directly under the subhead). It now
+        <em>introduces</em> the next section instead of floating in the middle. The empty space
+        moves above it, where it reads as breath rather than absence. <strong>Cheapest, biggest payoff.</strong>
+      </p>
+      <pre className="code">{`.hero {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;   /* was: center */
+  padding: 96px 0 56px;             /* breathing room at bottom */
+}
+.hero .hero-stack {                 /* wrap headline+subhead in a div */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.hero .hero-pointer { margin-bottom: 0; }`}</pre>
+
+      <h3>Option B — Tighten section-gap to ~120px</h3>
+      <p>
+        168px is generous; 120px still reads as deliberate spacing without the chasm. Pair with A
+        for the strongest result.
+      </p>
+
+      <h3>Option C — A hairline rule between hero and demo</h3>
+      <p>
+        A 1px <code>--rule</code> divider centred at ~40px width, sitting halfway through the
+        gap. Reads as architectural rather than empty. I'd <em>not</em> do this — it adds an
+        element where you've been removing them — but it's an option if A+B don't go far enough.
+      </p>
+
+      <div className="tip">
+        <strong>Recommendation:</strong> Do A. If after A the gap below the pointer still feels
+        large on your display, also do B. Don't do C.
+      </div>
+
+      <hr className="rule" />
+
+      {/* ——————————— Q3: Examples scrolling vs fading ——————————— */}
+      <h2><span className="num">03</span>Examples scrolling up vs. crossfading — which feels right?</h2>
+      <span className="verdict no">My take · Stay with the crossfade</span>
+
+      <div className="grid-2">
+        <Specimen title="A · Current — crossfade">
+          <ExamplesFade />
+        </Specimen>
+        <Specimen title="B · Scroll up (your proposal)">
+          <ExamplesScroll />
+        </Specimen>
+      </div>
+
+      <p>
+        Watch them side by side for ~30 seconds. Two things become apparent:
+      </p>
+      <ul>
+        <li>
+          <strong>Scroll-up implies a queue.</strong> Lines moving in from below set the
+          expectation that there's a list of things being recited — like a teleprompter or a
+          ticker. The page is making a different point: <em>any of these, on its own, is what
+          Blue Citrus does.</em> The crossfade treats each example as a complete thought
+          replacing the last.
+        </li>
+        <li>
+          <strong>Movement competes with the SVG.</strong> The flow illustration is already
+          carrying motion (the moving accent dashes). A second moving element directly below it
+          fights for the eye. Crossfade is a "non-motion" transition — opacity only — which lets
+          the illustration keep its primacy.
+        </li>
+      </ul>
+      <p className="note">
+        If you do want more life in the rotation, the right move is to <em>slow it down</em>
+        (3.4s → 5s) and add a subtle vertical drift (±2px, eased) — present but not loud. I
+        wouldn't ship the scroll-up version.
+      </p>
+
+      <hr className="rule" />
+
+      {/* ——————————— Other refinements ——————————— */}
+      <h2><span className="num">04</span>Other small things to touch before you ship</h2>
+
+      <h3>Wordmark presence</h3>
+      <p>
+        At 22px General Sans Medium, the wordmark fights the headline a little — they're the
+        same family and weight, just different sizes. Try 14px with letter-spacing 0.06em and
+        uppercase. It becomes <em>signage</em> rather than a competing word, and the headline
+        owns the page. Or keep it at 22px but in Inter — same trick, different lever.
+      </p>
+
+      <h3>The hero pointer's affordance</h3>
+      <p>
+        Right now it reads as a link, but it scrolls — the underline-on-hover or arrow-shift
+        is doing work an icon could carry more confidently. A 1px rule beneath the label that
+        animates on hover (similar to your previous version) is more honest about "this is a
+        navigation cue, not a destination."
+      </p>
+
+      <h3>Footer feels truncated</h3>
+      <p>
+        You removed the email link in the latest paste. A landing page with no contact channel
+        feels like it's hiding. Even <code>hello@</code> as plain text (un-linked) is enough —
+        it tells the reader there's a human behind it.
+      </p>
+
+      <h3>Mobile: subhead width</h3>
+      <p>
+        On 375px, the subhead's <code>max-width: 520px</code> doesn't constrain anything but
+        text-wrap: pretty does most of the work. Worth checking on a real device — if line 1
+        ends on "and" or "the" it's worth a manual <code>&lt;br/&gt;</code> to break after
+        "out".
+      </p>
+
+      <h3>The accent's single-use rule</h3>
+      <p>
+        The brief said accent only on links/CTAs. Right now it's on: hero pointer, animated SVG
+        lines, button label, success check. The SVG lines are arguably the strongest accent
+        moment on the page — they're pulling the eye away from "Sign up". Consider rendering the
+        animated lines in a darker neutral (<code>#444</code>) and reserving blue strictly for
+        the CTA. The illustration stays compelling — the action stays clear.
+      </p>
+
+      <h3>Submission persistence</h3>
+      <p>
+        Once submitted, a refresh wipes the success state. For a waitlist this matters — repeat
+        submissions are noise. Stash <code>localStorage.setItem('bc-waitlisted', email)</code>
+        on success and read it on mount; if present, render directly into the done state.
+      </p>
+
+      <h3>Loading state honesty</h3>
+      <p>
+        The "…" button is calm but easy to miss. A 1px progress rule under the input (animating
+        from left to right while submitting) gives the same calm but a clearer beat. Reuses the
+        rule you already have.
+      </p>
+
+      <hr className="rule" />
+
+      {/* ——————————— Q6: Randomised flow animation ——————————— */}
+      <h2><span className="num">06</span>Randomising the flow-line firing order</h2>
+      <span className="verdict yes">My take · Yes — but structured, not fully random</span>
+      <p>
+        You're right that the current top→middle→bottom cadence is legible as a
+        sequence after a few cycles. Fully random offsets cluster (three uniform
+        random numbers in [0,3000] sometimes land within 200ms — your three lines
+        fire in unison, looking like a sync glitch). The fix is <em>structured
+        unpredictability</em>: each line still fires on its own cadence, but
+        offsets, durations, and pause-windows are jittered around a shared mean
+        so the eye never catches a pattern.
+      </p>
+      <p>Three things to randomise per line, not just one:</p>
+      <ul>
+        <li><strong>Initial delay</strong> — stratified across thirds of a 1500ms window so they never collide on startup</li>
+        <li><strong>Cycle duration</strong> — physically-honest base (longer paths take longer) with ±15% jitter around the mean</li>
+        <li><strong>Inter-fire pause</strong> — 400–1200ms rest between cycles. This is the biggest visual win: there's always something moving but never everything moving</li>
+      </ul>
+
+      <div className="grid-2">
+        <Specimen title="A · Current — deterministic">
+          <FlowIllo labeled={false} randomised={false} />
+        </Specimen>
+        <Specimen title="B · Randomised (recommended)">
+          <FlowIllo labeled={false} randomised={true} />
+        </Specimen>
+      </div>
+
+      <p>
+        Watch them for ~30 seconds side by side. The deterministic version has a
+        rhythm you can count to. The randomised version still feels composed —
+        nothing is frantic — but the lines drift in and out of phase, and each
+        line occasionally rests while the others move. That resting is what sells
+        "alive" vs. "scripted." I also added a subtle opacity breath
+        (0.65 → 1.0 → 0.65 over the cycle) so the pause reads as a breath rather
+        than a gap.
+      </p>
+
+      <h3>What I'd avoid</h3>
+      <ul>
+        <li><strong>Randomising direction</strong> — the lines represent money flowing source→engine→destination. Reversing it would mislead.</li>
+        <li><strong>Randomising which line fires next</strong> — the three are simultaneous channels, not a sequence; shuffling implies sequence.</li>
+        <li><strong>Cycles below ~2s</strong> — reads as twitchy and competes with the rotating examples below.</li>
+      </ul>
+
+      <p className="note">
+        Implementation pattern (uses rAF instead of CSS keyframes so each line
+        can schedule its own next fire):
+      </p>
+      <pre className="code">{`function animateLine(pathEl, length) {
+  const baseDuration = 1800 + length * 4;
+  const duration = baseDuration * (0.85 + Math.random() * 0.3);  // ±15%
+  const pauseAfter = 400 + Math.random() * 800;                  // 400–1200ms
+
+  const start = performance.now();
+  function frame(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+    pathEl.style.strokeDashoffset = (length - (length + 20) * eased) + 'px';
+    pathEl.style.opacity = 0.65 + 0.35 * Math.sin(t * Math.PI);   // breath
+    if (t < 1) requestAnimationFrame(frame);
+    else setTimeout(() => animateLine(pathEl, length), pauseAfter);
+  }
+  requestAnimationFrame(frame);
+}
+
+// Stratified initial starts — each line gets its own third of 1500ms:
+[lineA, lineB, lineC].forEach((path, i) => {
+  const length = path.getTotalLength();
+  setTimeout(() => animateLine(path, length), i * 500 + Math.random() * 500);
+});`}</pre>
+      <ul>
+        <li>The single-column 680px width. It's the page's posture.</li>
+        <li>The "How it works" paragraph. Don't expand it. Confidence in restraint is the
+          tell that this is a serious product.</li>
+        <li>The success state. It earns the trust the form asked for.</li>
+        <li>The accent blue. Right colour, right amount of it (modulo the SVG note above).</li>
+      </ul>
+
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+</body>
+</html>
