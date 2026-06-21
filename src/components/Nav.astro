@@ -1,0 +1,26 @@
+---
+// Flat hairline navbar (direction B) with the A word-mark.
+// `onHome` switches anchor links between in-page (#work) and
+// home-relative (/#work) targets so it works on every page.
+interface Props {
+  onHome?: boolean;
+}
+const { onHome = false } = Astro.props;
+const base = onHome ? '' : '/';
+const brandHref = onHome ? '#top' : '/';
+---
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href={brandHref} aria-label="Akintayo Akinnibosun — home">
+      <span class="brand-mark">A</span>
+      <span class="brand-name">AKINTAYO AKINNIBOSUN</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href={`${base}#work`}>Work</a>
+      <a href={`${base}#about`}>About</a>
+      <a href={`${base}#contact`} class="nav-cta">Contact ↗</a>
+    </nav>
+    <button class="nav-menu-btn" aria-label="Menu">Menu</button>
+  </div>
+</header>

@@ -1,0 +1,15 @@
+---
+// Pill button. variant: 'primary' (dark fill) | 'ghost' (outline).
+// `shimmer` opts into the light-sweep island (reads best on primary).
+interface Props {
+  href: string;
+  variant?: 'primary' | 'ghost';
+  shimmer?: boolean;
+}
+const { href, variant = 'primary', shimmer = false } = Astro.props;
+const cls = ['btn', `btn-${variant}`, shimmer && 'btn-shimmer']
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a class={cls} href={href}><slot /></a>

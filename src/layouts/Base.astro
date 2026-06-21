@@ -1,0 +1,31 @@
+---
+// Base document shell: shared <head>, fonts, global styles.
+// Ships zero client JS of its own — interactive bits opt in per-page.
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Extra stylesheets to load after global (e.g. case-study styles). */
+  extraStyles?: boolean;
+}
+
+const { title, description } = Astro.props;
+const favicon =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111110'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial,sans-serif' font-size='20' font-weight='700' fill='white' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={favicon} />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

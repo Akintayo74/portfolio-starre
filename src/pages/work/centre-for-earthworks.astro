@@ -1,0 +1,279 @@
+---
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import Preview from '../../components/Preview.astro';
+---
+
+<CaseStudy
+  title="Centre for Earthworks — Case Study · Akintayo Akinnibosun"
+  description="Rebuilding an environmental NGO's site: 11 seconds to first paint down to 2, accessibility from 90 to 100."
+>
+  <!-- ============ BACK ============ -->
+  <div class="cs-top wrap">
+    <a class="cs-back" href="/#work">← Back to work</a>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <section class="cs-header wrap" id="sec-intro" data-reader="Intro" data-screen-label="Header">
+    <p class="cs-kind">Environmental NGO · performance + accessibility rebuild</p>
+    <h1>Centre for Earthworks</h1>
+    <p class="cs-summary">Their site took about eleven seconds to show anything on a mid-range phone — the exact phone, on the exact network, most of their audience uses. I rebuilt it so it shows up in two.</p>
+
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>Design &amp; build · rebuild</dd></div>
+      <div><dt>Focus</dt><dd>Performance &amp; accessibility</dd></div>
+      <div><dt>Year</dt><dd>2026</dd></div>
+      <div><dt>Stack</dt><dd>Astro · TypeScript</dd></div>
+    </dl>
+  </section>
+
+  <!-- ============ HERO SHOT ============ -->
+  <section class="cs-hero wrap">
+    <Preview url="centreforearthworks.org" aspect="band" />
+  </section>
+
+  <!-- ============ THE STAKES ============ -->
+  <section class="cs-block wrap" id="sec-stakes" data-reader="The Stakes" data-screen-label="The stakes">
+    <div class="cs-block-grid">
+      <div class="label">The stakes</div>
+      <div class="cs-prose">
+        <h3>A site that couldn't reach the people it was for.</h3>
+        <p>The Centre for Earthworks is an environmental NGO in Nigeria. Most of the people its site is meant for are on mid-range phones, on slow networks. On exactly those phones, the page took about <strong>eleven seconds to show anything at all</strong>.</p>
+        <p>I built the first version of that site earlier in my career. Coming back to it now, the problems were not hard to see — and they were mine to fix.</p>
+      </div>
+    </div>
+
+    <div class="cs-figure-2">
+      <figure class="cs-figure">
+        <Preview url="centreforearthworks.org · before" aspect="wide" blank />
+        <figcaption>Before: an empty div until a large bundle downloaded and ran.</figcaption>
+      </figure>
+      <figure class="cs-figure">
+        <Preview url="centreforearthworks.org · after" aspect="wide" />
+        <figcaption>After: text, headings and hero image in the first HTML response.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ THE SITUATION ============ -->
+  <section class="cs-block bordered wrap" id="sec-situation" data-reader="The Situation" data-screen-label="The situation">
+    <div class="cs-block-grid">
+      <div class="label">The situation</div>
+      <div class="cs-prose">
+        <h3>Nothing appeared until the JavaScript did.</h3>
+        <p>It was a single-page React app. The HTML the server sent was an empty div, and nothing showed until a large JavaScript bundle had downloaded and run. The hero image couldn't even <em>begin</em> loading until that happened — until the app ran, the page didn't know the image existed.</p>
+        <p>One number stands in for the rest: <strong>11.3 seconds to first paint on mobile</strong>, 4.6 on desktop. Here is where it started.</p>
+        <dl class="cs-callout">
+          <div><dt>Performance</dt><dd>46 / 60</dd></div>
+          <div><dt>Accessibility</dt><dd>90</dd></div>
+          <div><dt>SEO</dt><dd>83</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DECISION 1 ============ -->
+  <section class="cs-block bordered wrap" id="sec-d1" data-reader="Decision 01" data-reader-sub data-screen-label="Decision 01">
+    <div class="cs-block-grid">
+      <div class="label cs-decision-label">
+        <span class="d-tag">Decision</span>
+        <span class="d-num">01</span>
+        <span class="d-of">of four</span>
+      </div>
+      <div class="cs-prose">
+        <h3>Render the page instead of waiting for JavaScript.</h3>
+        <p>I moved the site to Astro. It renders each page to HTML at build time and ships no JavaScript by default; only the interactive parts load any. The text, the headings and the hero image are in the HTML the server sends — so the browser shows them, and fetches them, straight away.</p>
+        <p>Astro doesn't make a site fast or accessible on its own. <strong>It gets out of the way.</strong> The rebuild did the rest.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DECISION 2 ============ -->
+  <section class="cs-block bordered wrap" id="sec-d2" data-reader="Decision 02" data-reader-sub data-screen-label="Decision 02">
+    <div class="cs-block-grid">
+      <div class="label cs-decision-label">
+        <span class="d-tag">Decision</span>
+        <span class="d-num">02</span>
+        <span class="d-of">of four</span>
+      </div>
+      <div class="cs-prose">
+        <h3>Stop shipping the admin editor to visitors.</h3>
+        <p>The old bundle sent everything to everyone. That included the blog editor — rich text, image upload, the whole login stack — which no visitor ever uses. A first-time reader on a phone was downloading the tools the staff use to write posts.</p>
+        <p>I moved the admin app behind <code>/admin</code> as its own separate bundle. The marketing pages now ship none of it.</p>
+        <div class="cs-deltas" style="grid-template-columns: 1fr; max-width: 360px;">
+          <div class="cs-delta">
+            <div class="row"><span class="to">454 KB</span></div>
+            <div class="cap">of editor code removed from every public page.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DECISION 3 ============ -->
+  <section class="cs-block bordered wrap" id="sec-d3" data-reader="Decision 03" data-reader-sub data-screen-label="Decision 03">
+    <div class="cs-block-grid">
+      <div class="label cs-decision-label">
+        <span class="d-tag">Decision</span>
+        <span class="d-num">03</span>
+        <span class="d-of">of four</span>
+      </div>
+      <div class="cs-prose">
+        <h3>Accessibility as the default, not a pass at the end.</h3>
+        <p>Rebuilding from scratch meant I could put the semantics in from the first line: real landmarks, a correct heading order, a menu, dropdown and modal you can work entirely from the keyboard, reduced motion honored.</p>
+        <p>The part automation misses is the part that matters most. A keyboard pass turned up bugs a score of 90 never flagged — dropdown links you could click with a mouse but couldn't reach with the keyboard, among others.</p>
+        <p>One was small enough to be funny. Four icons used the wrong attribute name, so they had no alt text at all. The build passed without a word. It quietly held Accessibility and SEO under 100 — and a <strong>one-line fix took both to 100</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <section class="cs-quote wrap">
+    <blockquote>“A clean build and a high score can still ship something that's broken for someone using a keyboard.”</blockquote>
+    <cite>
+      <div class="who">On why the manual pass mattered</div>
+      <div class="role">Centre for Earthworks · rebuild notes</div>
+    </cite>
+  </section>
+
+  <!-- ============ DECISION 4 ============ -->
+  <section class="cs-block bordered wrap" id="sec-d4" data-reader="Decision 04" data-reader-sub data-screen-label="Decision 04">
+    <div class="cs-block-grid">
+      <div class="label cs-decision-label">
+        <span class="d-tag">Decision</span>
+        <span class="d-num">04</span>
+        <span class="d-of">of four</span>
+      </div>
+      <div class="cs-prose">
+        <h3>Make the subscribe form actually work.</h3>
+        <p>The original subscribe form did nothing. It caught the click and stopped the page from reloading, and that was all.</p>
+        <p>The backend had no subscription endpoint, so I wired the form to a third-party service as a working stand-in. It confirms in place without reloading the page, and it remembers you if you come back.</p>
+        <div class="cs-subscribe" id="subscribe">
+          <form class="cs-sub-form" id="subForm">
+            <input type="email" placeholder="you@example.org" aria-label="Email address" value="reader@earthworks.org" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="cs-confirm">
+            <span class="check" aria-hidden="true">✓</span>
+            <div>
+              <strong>You're subscribed.</strong>
+              <span>Confirmed in place — no page reload.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="cs-block bordered wrap" id="sec-results" data-reader="Results" data-screen-label="Results">
+    <div class="cs-block-grid">
+      <div class="label">Results</div>
+      <div class="cs-prose">
+        <h3>Eleven seconds became two.</h3>
+        <p>First paint on mobile went from about eleven seconds to about two. The JavaScript that used to block that first paint no longer does, and the images came down with it.</p>
+      </div>
+    </div>
+
+    <!-- headline deltas -->
+    <div class="cs-deltas">
+      <div class="cs-delta">
+        <div class="row"><span class="from">11.3s</span><span class="arrow">→</span><span class="to">~2s</span></div>
+        <div class="cap">First paint on mobile.</div>
+      </div>
+      <div class="cs-delta">
+        <div class="row"><span class="from">19 MB</span><span class="arrow">→</span><span class="to">2.2 MB</span></div>
+        <div class="cap">Total image weight.</div>
+      </div>
+      <div class="cs-delta">
+        <div class="row"><span class="from">46</span><span class="arrow">→</span><span class="to">86</span></div>
+        <div class="cap">Mobile performance score.</div>
+      </div>
+    </div>
+
+    <!-- lighthouse scoreboard (mobile) -->
+    <div class="score anim" id="scoreboard" style="margin-top: clamp(40px,6vw,64px);">
+      <div class="score-row">
+        <div class="score-metric"><div class="m-name">Performance</div><div class="m-sub">Mobile</div></div>
+        <div class="score-pair">
+          <div class="score-bar before"><span class="blab">Before</span><span class="track"><span class="fill" style="--w:46%;"></span></span><span class="val">46</span></div>
+          <div class="score-bar after"><span class="blab">After</span><span class="track"><span class="fill" style="--w:86%;"></span></span><span class="val">86</span></div>
+        </div>
+      </div>
+      <div class="score-row">
+        <div class="score-metric"><div class="m-name">Accessibility</div><div class="m-sub">Mobile</div></div>
+        <div class="score-pair">
+          <div class="score-bar before"><span class="blab">Before</span><span class="track"><span class="fill" style="--w:90%;"></span></span><span class="val">90</span></div>
+          <div class="score-bar after"><span class="blab">After</span><span class="track"><span class="fill" style="--w:100%;"></span></span><span class="val">100</span></div>
+        </div>
+      </div>
+      <div class="score-row">
+        <div class="score-metric"><div class="m-name">Best Practices</div><div class="m-sub">Mobile</div></div>
+        <div class="score-pair">
+          <div class="score-bar before"><span class="blab">Before</span><span class="track"><span class="fill" style="--w:77%;"></span></span><span class="val">77</span></div>
+          <div class="score-bar after"><span class="blab">After</span><span class="track"><span class="fill" style="--w:100%;"></span></span><span class="val">100</span></div>
+        </div>
+      </div>
+      <div class="score-row">
+        <div class="score-metric"><div class="m-name">SEO</div><div class="m-sub">Mobile</div></div>
+        <div class="score-pair">
+          <div class="score-bar before"><span class="blab">Before</span><span class="track"><span class="fill" style="--w:83%;"></span></span><span class="val">83</span></div>
+          <div class="score-bar after"><span class="blab">After</span><span class="track"><span class="fill" style="--w:100%;"></span></span><span class="val">100</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- full table -->
+    <div class="cs-table-wrap">
+      <table class="cs-table">
+        <caption>Lighthouse — full scores, mobile / desktop</caption>
+        <thead>
+          <tr>
+            <th scope="col">Metric</th>
+            <th scope="col">Before · mobile</th>
+            <th scope="col">Before · desktop</th>
+            <th scope="col">After · mobile</th>
+            <th scope="col">After · desktop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Performance</th><td>46</td><td>60</td><td class="aft">86</td><td class="aft">99</td></tr>
+          <tr><th scope="row">Accessibility</th><td>90</td><td>90</td><td class="aft">100</td><td class="aft">100</td></tr>
+          <tr><th scope="row">Best Practices</th><td>77</td><td>77</td><td class="aft">100</td><td class="aft">100</td></tr>
+          <tr><th scope="row">SEO</th><td>83</td><td>83</td><td class="aft">100</td><td class="aft">100</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S LEFT ============ -->
+  <section class="cs-block bordered wrap" id="sec-gaps" data-reader="What's Left" data-screen-label="What's left">
+    <div class="cs-block-grid">
+      <div class="label">What's left</div>
+      <div class="cs-prose">
+        <h3>The honest gaps, and two trades I'd make again.</h3>
+        <p>Mobile is 86, not in the 90s. The gap is almost entirely one animation doing too much work while the page loads. The fix is straightforward and the gain is small, so I left it — and said so.</p>
+        <ul>
+          <li><span class="n">01</span><span>The blog is fetched in the browser rather than built into the HTML. That weakens its SEO — which the organization didn't need — and in return new posts appear the moment they're published, with no rebuild.</span></li>
+          <li><span class="n">02</span><span>The subscribe form is a third-party stand-in rather than the org's own backend, until there's an endpoint to point it at.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSING ============ -->
+  <section class="cs-closing wrap">
+    <div class="label">Closing</div>
+    <p>Reserved — your voice. Left open for the final word.</p>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <Footer base="/" data-reader="Contact">
+    <h2>Have a site that deserves better?</h2>
+    <div class="hero-actions" style="margin-top: 34px;">
+      <Button href="mailto:hello@akintayo.dev" variant="primary" shimmer>Get in touch</Button>
+      <Button href="/#work" variant="ghost">See more work</Button>
+    </div>
+  </Footer>
+</CaseStudy>

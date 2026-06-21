@@ -1,0 +1,24 @@
+---
+// Contact footer. The heading/CTA area is passed in via the default
+// slot so the home page (email link) and case studies (buttons) can
+// differ, while the bottom bar stays identical everywhere.
+interface Props {
+  /** Where the brand/back links should resolve (e.g. "/" from a case study). */
+  base?: string;
+  /** Forwarded to the <footer> element (e.g. data-reader). */
+  [key: string]: unknown;
+}
+const { base = '', ...rest } = Astro.props;
+---
+
+<footer class="contact wrap" id="contact" {...rest}>
+  <slot />
+  <div class="foot">
+    <span class="copy">© 2026 Akintayo Akinnibosun</span>
+    <div class="foot-links">
+      <a href="mailto:hello@akintayo.dev">Email <span class="ext">↗</span></a>
+      <a href={`${base}#top`}>Twitter <span class="ext">↗</span></a>
+      <a href={`${base}#top`}>GitHub <span class="ext">↗</span></a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,127 @@
+---
+// Case-study page chrome: nav, the reading-indicator ruler, the
+// scoreboard reveal, and the button shimmer. The study's body is
+// passed via the default slot. Scripts are small progressive-
+// enhancement islands — the page is fully readable without them.
+import Base from './Base.astro';
+import Nav from '../components/Nav.astro';
+import '../styles/case.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+
+  <!-- reading indicator — built from [data-reader] sections -->
+  <nav
+    class="reader"
+    id="reader"
+    aria-label="Reading progress"
+    style="gap: 4px; flex-direction: column;"
+  >
+  </nav>
+
+  <script>
+    // Reveal the scoreboard bars when they scroll into view (motion-safe;
+    // without JS or with reduced motion, bars render at their final width).
+    const board = document.getElementById('scoreboard');
+    if (board && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              board.classList.add('in');
+              io.disconnect();
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+      io.observe(board);
+    }
+
+    // Reading indicator — section ruler that tracks scroll position and
+    // expands on hover/focus to show labels. Degrades to nothing without JS.
+    const nav = document.getElementById('reader');
+    const secs = Array.from(document.querySelectorAll<HTMLElement>('[data-reader]'));
+    if (nav && secs.length) {
+      const items = secs.map((sec) => {
+        const a = document.createElement('a');
+        a.className = 'reader-item';
+        if (sec.hasAttribute('data-reader-sub')) a.classList.add('sub');
+        a.href = '#' + sec.id;
+        a.innerHTML =
+          '<span class="r-label">' +
+          sec.getAttribute('data-reader') +
+          '</span><span class="r-tick"></span>';
+        a.addEventListener('click', (ev) => {
+          ev.preventDefault();
+          const y = sec.getBoundingClientRect().top + window.pageYOffset - 90;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        });
+        nav.appendChild(a);
+        return a;
+      });
+
+      let active = -1;
+      const update = () => {
+        const mid = window.pageYOffset + window.innerHeight * 0.35;
+        let idx = 0;
+        for (let i = 0; i < secs.length; i++) {
+          if (secs[i].getBoundingClientRect().top + window.pageYOffset <= mid) idx = i;
+        }
+        if (idx !== active) {
+          active = idx;
+          items.forEach((it, i) => {
+            it.classList.toggle('active', i === idx);
+            it.classList.toggle('read', i < idx);
+          });
+        }
+      };
+      let ticking = false;
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(() => {
+              update();
+              ticking = false;
+            });
+          }
+        },
+        { passive: true }
+      );
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    }
+  </script>
+
+  <script>
+    // Button shimmer — spawns a throwaway sweep span on each pointer-enter /
+    // focus. Fire-and-forget so a brief hover still plays the full sweep.
+    // Honors prefers-reduced-motion (CSS gates the visible sweep).
+    const DURATION = 1500;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const spawn = (btn: Element) => {
+      if (reduce && reduce.matches) return;
+      const s = document.createElement('span');
+      s.className = 'shimmer';
+      (s as HTMLElement).style.animationDuration = DURATION + 'ms';
+      btn.appendChild(s);
+      window.setTimeout(() => s.remove(), DURATION + 200);
+    };
+    document.querySelectorAll('.btn-shimmer').forEach((btn) => {
+      btn.addEventListener('mouseenter', () => spawn(btn));
+      btn.addEventListener('focus', () => spawn(btn));
+    });
+  </script>
+</Base>

@@ -1,0 +1,51 @@
+---
+// Signature "site shot": a mini browser window wrapping a CSS wireframe
+// that scrolls top→bottom on hover (container-query sized, reduced-motion
+// safe). `blank` renders the empty/spinner state for before/after pairs.
+//
+// NOTE: this is decorative. Accessibility hardening (aria-hidden, a
+// keyboard/touch affordance for the hover scroll) is intentionally
+// deferred to Phase 4 so the Phase 1 port stays a faithful 1:1.
+interface Props {
+  url: string;
+  aspect?: 'tall' | 'wide' | 'band';
+  compact?: boolean;
+  blank?: boolean;
+  ghost?: string;
+}
+const {
+  url,
+  aspect = 'tall',
+  compact = false,
+  blank = false,
+  ghost = 'waiting for javascript…',
+} = Astro.props;
+
+const previewCls = ['preview', compact && 'compact'].filter(Boolean).join(' ');
+const viewCls = ['preview-view', aspect !== 'tall' && aspect]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class={previewCls}>
+  <div class="preview-bar">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="url">{url}</span>
+  </div>
+  <div class={viewCls}>
+    {blank ? (
+      <div class="wf blank">
+        <div class="spin"></div>
+        <div class="ghost">{ghost}</div>
+      </div>
+    ) : (
+      <div class="wf">
+        <div class="wf-nav"><span class="wf-logo"></span><i></i><i></i><i></i></div>
+        <div class="wf-hero"><b></b><b class="s"></b><i></i><i class="s"></i><u></u></div>
+        <div class="wf-media"></div>
+        <div class="wf-cards"><span></span><span></span><span></span></div>
+        <div class="wf-foot"></div>
+      </div>
+    )}
+  </div>
+</div>

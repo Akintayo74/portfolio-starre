@@ -1,0 +1,13 @@
+---
+// Numbered section header: "01  Selected work" with hairline rule.
+interface Props {
+  num: string;
+  title: string;
+}
+const { num, title } = Astro.props;
+---
+
+<div class="section-head">
+  <span class="num">{num}</span>
+  <h2>{title}</h2>
+</div>
