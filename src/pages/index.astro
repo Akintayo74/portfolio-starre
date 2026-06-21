@@ -5,29 +5,34 @@ import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Preview from '../components/Preview.astro';
+
+// Placeholders until real details land (see CLAUDE.md content TODOs).
+const CAL = 'https://cal.com/akintayo';
+const EMAIL = 'mailto:hello@akintayo.dev';
 ---
 
 <Base
   title="Akintayo Akinnibosun — Frontend Developer"
-  description="Frontend developer who designs and builds fast, beautiful sites for indie makers."
+  description="I build fast, accessible marketing sites for devtools companies — one person, from the first idea to the finished site."
 >
   <Nav onHome />
 
   <main id="top">
     <!-- ============ HERO ============ -->
     <section class="hero wrap">
-      <p class="eyebrow">Frontend developer · design + build</p>
-      <h1>I design and build sites indie makers are <span class="mute">proud to ship.</span></h1>
-      <p class="hero-lede">I take rough launch pages and turn them into fast, beautiful sites that actually convert — designed and built end to end.</p>
+      <p class="eyebrow">Frontend developer</p>
+      <h1>I build fast, accessible marketing sites <span class="mute">for devtools companies.</span></h1>
+      <p class="hero-lede">One person, from the first idea to the finished site. I care about how it reads, how fast it loads, and whether everyone can use it.</p>
       <div class="hero-actions">
-        <Button href="#work" variant="primary">View the work</Button>
-        <Button href="#contact" variant="ghost">Get in touch</Button>
+        <Button href="#work" variant="primary">See the work</Button>
+        <Button href={CAL} variant="ghost">Book a call</Button>
       </div>
     </section>
 
     <!-- ============ WORK ============ -->
     <section class="section wrap" id="work">
       <SectionHead num="01" title="Selected work" />
+      <p class="section-note">One project, told properly — not a wall of thumbnails. It's an environmental NGO, not a devtools company, but the work is the same one I'd bring to your launch site: take a slow, broken build and make it fast and accessible for the people who have to use it.</p>
 
       <div class="work-grid single">
         <a class="case-card" href="/work/centre-for-earthworks">
@@ -46,16 +51,54 @@ import Preview from '../components/Preview.astro';
       </div>
     </section>
 
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section wrap" id="how">
+      <SectionHead num="02" title="How it works" />
+      <p class="section-note">Hiring someone for a site that matters is a gamble. Here's how it goes, so there are no surprises.</p>
+
+      <div class="how-list">
+        <div class="how-row">
+          <div class="how-num">01 — A short call</div>
+          <div>
+            <div class="how-title">We talk it through.</div>
+            <div class="how-desc">We go over what you're building and what you need. No obligation — it's how we both find out if I'm the right fit.</div>
+          </div>
+        </div>
+        <div class="how-row">
+          <div class="how-num">02 — Fixed scope, fixed price</div>
+          <div>
+            <div class="how-title">One number, up front.</div>
+            <div class="how-desc">We agree on exactly what I'm building and what it costs before I start. Most projects land in the $3–5k range.</div>
+          </div>
+        </div>
+        <div class="how-row">
+          <div class="how-num">03 — Start to finish</div>
+          <div>
+            <div class="how-title">One person builds the whole thing.</div>
+            <div class="how-desc">Nothing gets lost in a handoff. You see it as a working page early, not a mockup you have to imagine built.</div>
+          </div>
+        </div>
+        <div class="how-row">
+          <div class="how-num">04 — A clear timeline</div>
+          <div>
+            <div class="how-title">You know the date before we start.</div>
+            <div class="how-desc">Most sites ship in two to four weeks.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ ABOUT ============ -->
     <section class="section wrap" id="about">
-      <SectionHead num="02" title="About" />
+      <SectionHead num="03" title="About" />
 
       <div class="about-grid">
         <div>
-          <p class="about-lede">I’m a frontend developer who designs as well as builds — so the site you launch is the site you imagined.</p>
+          <p class="about-lede">I’m a frontend developer who builds marketing sites, start to finish.</p>
           <div class="about-body">
-            <p>Most makers I work with are technical, time-poor, and stuck with a homepage that doesn’t do their product justice. I step in for the part that isn’t their craft: turning a vague idea of “it should look good” into a clear, fast, considered site.</p>
-            <p>I work end to end — layout, type, motion, and the actual responsive build — so nothing gets lost in a handoff. No templates, no page-builder bloat. Just a site that loads quickly, reads clearly, and feels like it was made on purpose.</p>
+            <p>Most devtools founders I work with are technical and short on time. You could build the site yourself — you probably did. But it ended up looking like the template it started from, and it doesn’t match the product behind it.</p>
+            <p>So that’s the part I take on. I build the whole thing — the layout, the type, the responsive work — and I keep at it until it looks right. No template, no page-builder, nothing heavier than it needs to be.</p>
+            <p>Most of my attention goes to two things. The first is craft — the product-minded choices about how a site works, and the small touches that bring a moment of delight when you don’t expect one. The second is whether everyone can use it. That part matters to me past the score — it’s about not leaving people out.</p>
           </div>
           <div class="about-tools">
             <span class="chip">HTML &amp; CSS</span>
@@ -73,14 +116,14 @@ import Preview from '../components/Preview.astro';
 
     <!-- ============ EXPERIENCE ============ -->
     <section class="section wrap" id="experience">
-      <SectionHead num="03" title="Experience" />
+      <SectionHead num="04" title="Experience" />
 
       <div class="exp-list">
         <div class="exp-row">
           <div class="exp-yr">2024 — now</div>
           <div>
-            <div class="exp-role">Independent — design &amp; build for indie makers</div>
-            <div class="exp-note">Fast, considered sites shipped in two to four weeks</div>
+            <div class="exp-role">Independent — marketing sites for devtools</div>
+            <div class="exp-note">Fast, accessible sites shipped in two to four weeks</div>
           </div>
         </div>
         <div class="exp-row placeholder">
@@ -95,8 +138,12 @@ import Preview from '../components/Preview.astro';
 
     <!-- ============ CONTACT ============ -->
     <Footer>
-      <h2>Have a site that deserves better?</h2>
-      <a class="contact-email" href="mailto:hello@akintayo.dev">hello@akintayo.dev</a>
+      <h2>Have a launch coming up?</h2>
+      <p class="contact-note">If you’re building something and the site needs to catch up, get in touch. A short call is the easiest way to start — or just email me.</p>
+      <div class="hero-actions" style="margin-top: 28px;">
+        <Button href={CAL} variant="primary">Book a call</Button>
+        <Button href={EMAIL} variant="ghost">Email me</Button>
+      </div>
     </Footer>
   </main>
 </Base>

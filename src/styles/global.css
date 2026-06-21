@@ -492,3 +492,47 @@ img { display: block; max-width: 100%; }
   .thumb:hover .wf,
   .case-card:hover .wf { transform: none !important; }
 }
+
+/* ============================================================
+   SECTION INTRO NOTE  (a short framing line under a section head)
+   ============================================================ */
+.section-note {
+  margin: 22px 0 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-55);
+  max-width: 60ch;
+}
+
+/* ============================================================
+   HOW IT WORKS  (numbered steps — predictability, not price)
+   ============================================================ */
+.how-list { margin-top: 30px; }
+.how-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 30px;
+  padding: 30px 0;
+  border-top: 1px solid var(--line);
+}
+.how-num {
+  font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--mute);
+}
+.how-title { font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; letter-spacing: -0.015em; }
+.how-desc { font-size: 17px; color: var(--ink-55); margin-top: 8px; line-height: 1.55; max-width: 52ch; }
+
+/* ============================================================
+   CONTACT NOTE  (lede above the contact buttons)
+   ============================================================ */
+.contact-note {
+  margin: 26px 0 0;
+  font-size: clamp(17px, 2vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-70);
+  max-width: 46ch;
+}
+
+@media (max-width: 840px) {
+  .how-row { grid-template-columns: 1fr; gap: 8px; }
+}
