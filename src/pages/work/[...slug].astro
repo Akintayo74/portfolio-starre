@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from 'astro:content';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import Preview from '../../components/Preview.astro';
+
+export async function getStaticPaths() {
+  const studies = await getCollection('work', ({ data }) => !data.draft);
+  return studies.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+// Placeholders until real details land (see CLAUDE.md content TODOs).
+const CAL = 'https://cal.com/akintayo';
+const EMAIL = 'mailto:hello@akintayo.dev';
+---
+
+<CaseStudy title={`${d.title} — Case Study · Akintayo Akinnibosun`} description={d.description}>
+  <div class="cs-top wrap">
+    <a class="cs-back" href="/#work">← Back to work</a>
+  </div>
+
+  <section class="cs-header wrap" id="sec-intro" data-reader="Intro">
+    <p class="cs-kind">{d.kind}</p>
+    <h1>{d.title}</h1>
+    <p class="cs-summary">{d.summary}</p>
+
+    <dl class="cs-meta">
+      <div><dt>Role</dt><dd>{d.role}</dd></div>
+      <div><dt>Focus</dt><dd>{d.focus}</dd></div>
+      <div><dt>Year</dt><dd>{d.year}</dd></div>
+      <div><dt>Stack</dt><dd>{d.stack}</dd></div>
+    </dl>
+  </section>
+
+  <section class="cs-hero wrap">
+    <Preview url={d.url} aspect="band" />
+  </section>
+
+  <Content />
+
+  <Footer base="/" data-reader="Contact">
+    <h2>Have a launch coming up?</h2>
+    <p class="contact-note">If you’re building something and the site needs to catch up, get in touch. A short call is the easiest way to start — or just email me.</p>
+    <div class="hero-actions" style="margin-top: 28px;">
+      <Button href={CAL} variant="primary" shimmer>Book a call</Button>
+      <Button href={EMAIL} variant="ghost">Email me</Button>
+    </div>
+  </Footer>
+</CaseStudy>

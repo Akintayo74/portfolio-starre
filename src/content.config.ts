@@ -10,6 +10,8 @@ const work = defineCollection({
     title: z.string(),
     kind: z.string(),
     summary: z.string(),
+    /** SEO meta description for the case-study page. */
+    description: z.string(),
     role: z.string(),
     focus: z.string(),
     year: z.string(),

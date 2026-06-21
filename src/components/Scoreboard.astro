@@ -1,0 +1,28 @@
+---
+// Lighthouse before/after scoreboard. Bars are scroll-revealed by the
+// island in CaseStudy.astro (adds .in); without JS or with reduced
+// motion they render at their final width. The --w custom property on
+// each fill is what the reveal animates to.
+interface Row {
+  name: string;
+  sub: string;
+  before: number;
+  after: number;
+}
+interface Props {
+  rows: Row[];
+}
+const { rows } = Astro.props;
+---
+
+<div class="score anim" id="scoreboard" style="margin-top: clamp(40px, 6vw, 64px);">
+  {rows.map((r) => (
+    <div class="score-row">
+      <div class="score-metric"><div class="m-name">{r.name}</div><div class="m-sub">{r.sub}</div></div>
+      <div class="score-pair">
+        <div class="score-bar before"><span class="blab">Before</span><span class="track"><span class="fill" style={`--w:${r.before}%;`}></span></span><span class="val">{r.before}</span></div>
+        <div class="score-bar after"><span class="blab">After</span><span class="track"><span class="fill" style={`--w:${r.after}%;`}></span></span><span class="val">{r.after}</span></div>
+      </div>
+    </div>
+  ))}
+</div>

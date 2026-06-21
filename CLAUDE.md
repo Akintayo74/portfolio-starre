@@ -60,13 +60,15 @@ Built in Astro: the site dogfoods the performance + accessibility story it sells
   mockup archived to `/reference`, CSS ported verbatim, home + case study
   rebuilt with components/layouts. No visual or content change yet — a faithful
   1:1 port of the mockup.
-- **Phase 2 — Componentize.** (Largely folded into Phase 1.) Remaining: extract
-  any leftover repeated markup (e.g. the scoreboard/deltas) into components.
-- **Phase 3 — Reposition & rewrite. 🚧 IN PROGRESS.** Homepage copy done
-  (hero, How it works, About with craft+a11y pillars, contact with Cal.com +
-  email). Section order: hero → 01 Work → 02 How it works → 03 About →
-  04 Experience → contact. Remaining: migrate the Earthworks study into the MDX
-  collection (currently a faithful .astro port).
+- **Phase 2 — Componentize. ✅ DONE.** Nav/Footer/Button/SectionHead/Preview
+  extracted in Phase 1; the scoreboard is now `Scoreboard.astro`.
+- **Phase 3 — Reposition & rewrite. ✅ DONE.** Homepage copy done (hero, How it
+  works, About with craft+a11y pillars, contact with Cal.com + email). Section
+  order: hero → 01 Work → 02 How it works → 03 About → 04 Experience → contact.
+  The Earthworks study now lives in the MDX collection
+  (`src/content/work/centre-for-earthworks.mdx`), rendered by a dynamic route;
+  its copy was tightened to the voice rules and the contact footer aligned to
+  the homepage. Next big content task: a SaaS-specific case study.
 - **Phase 4 — Accessibility hardening + manual test protocol.** See below.
 - **Phase 5 — Ship.** Perf budget, deploy (Cloudflare Pages / Netlify — TBD),
   optional GitHub Actions running axe + Lighthouse CI as the automated *floor*.
@@ -75,11 +77,11 @@ Built in Astro: the site dogfoods the performance + accessibility story it sells
 ```
 src/
   layouts/   Base.astro, CaseStudy.astro
-  components/ Nav, Footer, Button, SectionHead, Preview (wireframe)
+  components/ Nav, Footer, Button, SectionHead, Preview (wireframe), Scoreboard
   pages/      index.astro (hero/work/how/about/experience/contact),
-              work/centre-for-earthworks.astro
-  content/    work/  (empty — schema ready for Phase 3 MDX migration)
-  content.config.ts  typed case-study schema
+              work/[...slug].astro  (renders a case study from the collection)
+  content/    work/centre-for-earthworks.mdx  (the case study, MDX + components)
+  content.config.ts  typed case-study schema (incl. SEO description)
   styles/     global.css (ex-portfolio.css), case.css  (ported verbatim)
 reference/    the original HTML/CSS mockup, kept for side-by-side verification
 ```

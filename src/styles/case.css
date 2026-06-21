@@ -182,6 +182,8 @@
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(24px, 4vw, 56px); margin-top: 14px;
 }
+/* single-figure variant (e.g. the editor-weight removed in Decision 02) */
+.cs-deltas.single { grid-template-columns: 1fr; max-width: 360px; }
 .cs-delta { border-top: 2px solid var(--ink); padding-top: 18px; }
 .cs-delta .row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .cs-delta .from {
