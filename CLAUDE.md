@@ -15,6 +15,31 @@ Built in Astro: the site dogfoods the performance + accessibility story it sells
 - **Voice:** concise, plain, proof-led — no marketing fluff. Quality over
   quantity; only 1–2 deep case studies. Light mode only, no accent color
   (user rejected dark mode). Inspired by juliacodes.com, but its own identity.
+- **Aim:** broad devtools banner (dev tools / infra / APIs / AI-dev), not one
+  sub-vein — the dogfooding proof carries across all four.
+
+## Target buyer (locked)
+- **North-star buyer:** seed → early-Series-A devtools founder/CTO. Technical,
+  recently funded, **no in-house designer**, a launch/conference/raise coming
+  up. Current site is a template that undersells them; they privately admire
+  Linear / Vercel / Resend. They don't want a designer→dev handoff or a 6-week
+  agency engagement — they want taste + build, shipped fast.
+- **Why this niche converges for Akintayo:** (1) his monochrome, type-forward
+  aesthetic *is* the Stripe→Linear→Vercel→Resend lineage they aspire to;
+  (2) "design AND build" answers a pain technical founders have actually felt
+  (handoff); (3) his proof (perf, a11y, the Earthworks rebuild) is verifiable
+  by exactly this audience — they open the network tab; (4) $3–5k is trivial at
+  seed stage. Everything he has gets *read correctly* by this buyer.
+- **The site's job:** a devtools homepage is a ~10-second credibility proxy for
+  the product itself (PLG funnel: HN/X/conf → site → docs → free-tier signup).
+  Fast + crafted signals a quality product before a feature is read.
+- **Qualify a prospect:** sells software to devs (docs + free tier) · seed–A,
+  recently funded · technical founder, no designer · launch/raise imminent ·
+  current site is a template · would nod at your network tab.
+- **Language — resonates:** fast, ships, craft, plainly, proof, benchmarks,
+  accessible, no bloat, concrete numbers, honest tradeoffs. **Repels:**
+  "stunning", "transform your brand", "elevate", "synergy", "bespoke digital
+  experiences" — generic agency-speak reads as a threat, not credibility.
 
 ## Build plan & status
 - **Phase 1 — Scaffold & port. ✅ DONE.** Fresh Astro + TS (strict) at root,
