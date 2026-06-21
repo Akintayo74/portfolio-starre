@@ -18,10 +18,10 @@ import Preview from '../../components/Preview.astro';
   <section class="cs-header wrap" id="sec-intro" data-reader="Intro" data-screen-label="Header">
     <p class="cs-kind">Environmental NGO · performance + accessibility rebuild</p>
     <h1>Centre for Earthworks</h1>
-    <p class="cs-summary">Their site took about eleven seconds to show anything on a mid-range phone — the exact phone, on the exact network, most of their audience uses. I rebuilt it so it shows up in two.</p>
+    <p class="cs-summary">Their site took about eleven seconds to show anything on a mid-range phone — the kind most of their audience is on. I rebuilt it to show up in two.</p>
 
     <dl class="cs-meta">
-      <div><dt>Role</dt><dd>Design &amp; build · rebuild</dd></div>
+      <div><dt>Role</dt><dd>Build · rebuild</dd></div>
       <div><dt>Focus</dt><dd>Performance &amp; accessibility</dd></div>
       <div><dt>Year</dt><dd>2026</dd></div>
       <div><dt>Stack</dt><dd>Astro · TypeScript</dd></div>
@@ -62,8 +62,8 @@ import Preview from '../../components/Preview.astro';
       <div class="label">The situation</div>
       <div class="cs-prose">
         <h3>Nothing appeared until the JavaScript did.</h3>
-        <p>It was a single-page React app. The HTML the server sent was an empty div, and nothing showed until a large JavaScript bundle had downloaded and run. The hero image couldn't even <em>begin</em> loading until that happened — until the app ran, the page didn't know the image existed.</p>
-        <p>One number stands in for the rest: <strong>11.3 seconds to first paint on mobile</strong>, 4.6 on desktop. Here is where it started.</p>
+        <p>It was a single-page React app. The HTML the server sent was an empty div, and nothing showed until a large JavaScript bundle had downloaded and run. The hero image couldn't even <em>begin</em> loading: until the app ran, the page didn't know it existed.</p>
+        <p>First paint was <strong>11.3 seconds on mobile</strong>, 4.6 on desktop. This is where it started.</p>
         <dl class="cs-callout">
           <div><dt>Performance</dt><dd>46 / 60</dd></div>
           <div><dt>Accessibility</dt><dd>90</dd></div>
@@ -122,19 +122,15 @@ import Preview from '../../components/Preview.astro';
       <div class="cs-prose">
         <h3>Accessibility as the default, not a pass at the end.</h3>
         <p>Rebuilding from scratch meant I could put the semantics in from the first line: real landmarks, a correct heading order, a menu, dropdown and modal you can work entirely from the keyboard, reduced motion honored.</p>
-        <p>The part automation misses is the part that matters most. A keyboard pass turned up bugs a score of 90 never flagged — dropdown links you could click with a mouse but couldn't reach with the keyboard, among others.</p>
-        <p>One was small enough to be funny. Four icons used the wrong attribute name, so they had no alt text at all. The build passed without a word. It quietly held Accessibility and SEO under 100 — and a <strong>one-line fix took both to 100</strong>.</p>
+        <p>A keyboard pass turned up bugs a score of 90 never flagged — dropdown links you could click with a mouse but couldn't reach with the keyboard, among others.</p>
+        <p>Four icons used the wrong attribute name, so they had no alt text at all — and the build passed without a word. That held Accessibility and SEO under 100; a <strong>one-line fix took both to 100</strong>.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ QUOTE ============ -->
+  <!-- ============ EMPHASIZED STATEMENT ============ -->
   <section class="cs-quote wrap">
-    <blockquote>“A clean build and a high score can still ship something that's broken for someone using a keyboard.”</blockquote>
-    <cite>
-      <div class="who">On why the manual pass mattered</div>
-      <div class="role">Centre for Earthworks · rebuild notes</div>
-    </cite>
+    <p class="cs-statement">A clean build and a high score can still ship something <mark>broken for someone using a keyboard</mark>.</p>
   </section>
 
   <!-- ============ DECISION 4 ============ -->
@@ -252,8 +248,8 @@ import Preview from '../../components/Preview.astro';
     <div class="cs-block-grid">
       <div class="label">What's left</div>
       <div class="cs-prose">
-        <h3>The honest gaps, and two trades I'd make again.</h3>
-        <p>Mobile is 86, not in the 90s. The gap is almost entirely one animation doing too much work while the page loads. The fix is straightforward and the gain is small, so I left it — and said so.</p>
+        <h3>The gaps, and two tradeoffs.</h3>
+        <p>Mobile is 86, not in the 90s. The gap is almost entirely one animation doing too much work while the page loads. The fix is straightforward and the gain is small, so I left it.</p>
         <ul>
           <li><span class="n">01</span><span>The blog is fetched in the browser rather than built into the HTML. That weakens its SEO — which the organization didn't need — and in return new posts appear the moment they're published, with no rebuild.</span></li>
           <li><span class="n">02</span><span>The subscribe form is a third-party stand-in rather than the org's own backend, until there's an endpoint to point it at.</span></li>

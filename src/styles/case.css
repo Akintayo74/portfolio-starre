@@ -94,19 +94,27 @@
 .cs-stat .fig { font-size: clamp(40px, 5.2vw, 60px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
 .cs-stat .desc { font-size: 16px; color: var(--ink-55); margin-top: 12px; max-width: 24ch; }
 
-/* pull quote */
+/* emphasized standalone statement (ex–pull quote): a plain line with a
+   soft monochrome highlight on the key phrase, instead of bold or a
+   staged quote. box-decoration-break keeps the highlight tidy when the
+   marked phrase wraps across lines. */
 .cs-quote { padding-block: clamp(48px, 7vw, 80px); border-top: 1px solid var(--line); }
-.cs-quote blockquote {
+.cs-statement {
   margin: 0;
   font-size: clamp(24px, 3.4vw, 38px);
-  line-height: 1.25;
+  line-height: 1.4;
   letter-spacing: -0.025em;
   font-weight: 500;
-  max-width: 24ch;
+  max-width: 28ch;
 }
-.cs-quote cite { display: block; margin-top: 22px; font-style: normal; }
-.cs-quote cite .who { font-size: 16px; font-weight: 600; }
-.cs-quote cite .role { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; color: var(--mute); margin-top: 4px; }
+.cs-statement mark {
+  background: var(--softer);
+  color: inherit;
+  border-radius: 5px;
+  padding: 0.04em 0.22em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
 
 /* next project */
 .cs-next { border-top: 1px solid var(--line); padding-block: clamp(48px, 7vw, 80px); }
