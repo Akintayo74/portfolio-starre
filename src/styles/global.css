@@ -247,32 +247,6 @@ main:focus { outline: none; }
 }
 
 /* ============================================================
-   PLACEHOLDER "SHOT"  (swap for real screenshots later)
-   ============================================================ */
-.shot {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  background: repeating-linear-gradient(135deg,
-              #e8e6e2, #e8e6e2 11px, #f2f0ed 11px, #f2f0ed 22px);
-  display: flex;
-  align-items: flex-end;
-}
-.shot.tall  { aspect-ratio: 4 / 3; }
-.shot.wide  { aspect-ratio: 16 / 10; }
-.shot.band  { aspect-ratio: 21 / 9; }
-.shot-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--mute);
-  background: #fff;
-  padding: 4px 8px;
-  margin: 10px;
-  border-radius: 5px;
-}
-
-/* ============================================================
    BROWSER PREVIEW  (wireframe “site shot” + scroll-on-hover)
    Drop a real tall screenshot in place of .wf later — the same
    scroll interaction applies to any tall child of .preview-view.
@@ -412,30 +386,16 @@ main:focus { outline: none; }
 /* ============================================================
    ABOUT
    ============================================================ */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: clamp(36px, 6vw, 88px);
-  margin-top: 48px;
-  align-items: start;
-}
 .about-lede {
   font-size: clamp(22px, 2.8vw, 30px);
   line-height: 1.32;
   letter-spacing: -0.02em;
   font-weight: 500;
-  margin: 0;
-  max-width: 22ch;
+  margin: 48px 0 0;
+  max-width: 24ch;
 }
-.about-body { margin: 0; }
-.about-body p { font-size: 17px; line-height: 1.6; color: var(--ink-55); margin: 0 0 18px; max-width: 52ch; }
-.about-portrait {
-  aspect-ratio: 4 / 5;
-  border-radius: 14px;
-  background: repeating-linear-gradient(135deg,#e8e6e2,#e8e6e2 11px,#f2f0ed 11px,#f2f0ed 22px);
-  position: relative;
-  display: flex; align-items: flex-end;
-}
+.about-body { margin-top: 26px; }
+.about-body p { font-size: 17px; line-height: 1.6; color: var(--ink-55); margin: 0 0 18px; max-width: 60ch; }
 .about-tools { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
@@ -500,9 +460,6 @@ main:focus { outline: none; }
    ============================================================ */
 @media (max-width: 840px) {
   .work-grid { grid-template-columns: 1fr; }
-  .about-grid { grid-template-columns: 1fr; }
-  .about-portrait { max-width: 320px; }
-  .thumb-row { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .exp-row { grid-template-columns: 1fr; gap: 6px; }
   .exp-yr { font-size: 15px; }
 }

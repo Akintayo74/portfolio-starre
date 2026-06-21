@@ -122,7 +122,9 @@ dropped in gets the same scroll for free.
 - Real contact details (currently `hello@akintayo.dev`; Twitter/GitHub → `#top`).
 - Real experience history (the Experience section has a clearly-marked
   placeholder row).
-- Real portrait image (currently a hatched placeholder block).
+- Portrait was removed by choice (type-forward, devtools-aesthetic; a rushed
+  photo would cost more credibility than it adds). Optional future touch: a
+  small, tasteful b&w avatar near the About lede or contact — not a blocker.
 
 ## Git
 - Work on branch `claude/saas-portfolio-planning-6qmw0w`.
