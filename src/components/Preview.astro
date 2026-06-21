@@ -3,9 +3,9 @@
 // that scrolls top→bottom on hover (container-query sized, reduced-motion
 // safe). `blank` renders the empty/spinner state for before/after pairs.
 //
-// NOTE: this is decorative. Accessibility hardening (aria-hidden, a
-// keyboard/touch affordance for the hover scroll) is intentionally
-// deferred to Phase 4 so the Phase 1 port stays a faithful 1:1.
+// Purely decorative: the root is aria-hidden so screen readers skip the
+// faux chrome and wireframe (the surrounding heading / figcaption carries
+// the meaning). It has no focusable descendants, so hiding it is safe.
 interface Props {
   url: string;
   aspect?: 'tall' | 'wide' | 'band';
@@ -27,7 +27,7 @@ const viewCls = ['preview-view', aspect !== 'tall' && aspect]
   .join(' ');
 ---
 
-<div class={previewCls}>
+<div class={previewCls} aria-hidden="true">
   <div class="preview-bar">
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     <span class="url">{url}</span>

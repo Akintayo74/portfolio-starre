@@ -69,8 +69,10 @@ Built in Astro: the site dogfoods the performance + accessibility story it sells
   (`src/content/work/centre-for-earthworks.mdx`), rendered by a dynamic route;
   its copy was tightened to the voice rules and the contact footer aligned to
   the homepage. Next big content task: a SaaS-specific case study.
-- **Phase 4 — Accessibility hardening + manual test protocol.** See below.
-- **Phase 5 — Ship.** Perf budget, deploy (Cloudflare Pages / Netlify — TBD),
+- **Phase 4 — Accessibility hardening + manual test protocol. ✅ DONE.** See the
+  resolved list below; the manual protocol lives in `ACCESSIBILITY.md`.
+- **Phase 5 — Ship.** Perf budget, deploy to **Cloudflare Pages** (domain
+  `akintayo.dev` is already on Cloudflare — least DNS friction, static edge),
   optional GitHub Actions running axe + Lighthouse CI as the automated *floor*.
 
 ## Structure
@@ -85,10 +87,11 @@ src/
   styles/     global.css (ex-portfolio.css), case.css  (ported verbatim)
 reference/    the original HTML/CSS mockup, kept for side-by-side verification
 ```
-- Astro ships **zero client JS by default**. The only scripts are two small
-  inline modules in `CaseStudy.astro`: the reading-indicator ruler and the
-  scoreboard scroll-reveal, plus the button shimmer. All are progressive
-  enhancement — the page is fully readable without them and reduced-motion safe.
+- Astro ships **almost no client JS**. Every page gets one tiny inline module
+  (button shimmer in `Base.astro` + the nav disclosure in `Nav.astro`); case
+  studies add one more for the reading-indicator ruler and scoreboard reveal.
+  All are progressive enhancement — pages are fully readable/navigable without
+  them and are reduced-motion safe.
 
 ## Signature interaction
 "Site shots" are **CSS wireframes in a mini browser window** (`Preview.astro`),
@@ -96,18 +99,22 @@ not images. On hover the `.wf` scrolls top→bottom (it's 200% tall so a -50%
 shift lands at the bottom). Container-query sized; a real tall screenshot
 dropped in gets the same scroll for free.
 
-## Phase 4 — known accessibility work (deferred from the faithful port)
-1. **Contrast:** `--mute` (#9b9893) on white ≈ 2.86:1 — fails AA. Used on the
-   hero's "proud to ship." (large text) and many labels. Needs a real fix.
-2. **Mobile menu** (`.nav-menu-btn`) is a dead button: no `aria-expanded`, no
-   disclosure behavior, no ESC-to-close. Build a real disclosure pattern.
-3. **No skip-to-content link.**
-4. **Decorative wireframes** (`Preview`/`.wf`) aren't `aria-hidden` — they'd add
-   noise for screen readers.
-5. **Hover-only previews** don't fire on touch or keyboard focus.
-6. **`:focus-visible`** styling is undefined — must be deliberate in monochrome.
-7. Manual test protocol to write into the repo: keyboard pass, VoiceOver + NVDA,
-   200% zoom/reflow, reduced motion, throttled mobile.
+## Phase 4 — accessibility work (✅ resolved)
+1. **Contrast:** `--mute` darkened #9b9893 (2.86:1) → #78756f (~4.6:1) — passes
+   AA for text.
+2. **Mobile menu:** `Nav.astro` is now a real disclosure — `aria-expanded`,
+   `aria-controls`, Esc-to-close, focus into menu on open / back to button on
+   close, outside-click dismiss.
+3. **Skip-to-content link** added in `Base.astro` (first tab stop → `<main>`,
+   which is `tabindex="-1"`).
+4. **Decorative wireframes** (`Preview`) are `aria-hidden` — silent to SRs.
+5. **Previews** now scroll on keyboard focus too (`.case-card:focus-visible`),
+   reduced-motion safe. Touch is intentionally static (decorative; see
+   ACCESSIBILITY.md "Known limitation").
+6. **`:focus-visible`** — one deliberate 2px ink ring site-wide; pointer focus
+   shows none.
+7. **Manual test protocol** written to `ACCESSIBILITY.md` (keyboard, VoiceOver +
+   NVDA, 200%/400% zoom, reduced motion, throttled mobile, no-JS).
 
 ## Content TODOs
 - Real **Cal.com** booking URL (currently placeholder `https://cal.com/akintayo`,

@@ -2,6 +2,10 @@
 // Flat hairline navbar (direction B) with the A word-mark.
 // `onHome` switches anchor links between in-page (#work) and
 // home-relative (/#work) targets so it works on every page.
+//
+// On narrow screens the link list collapses behind a disclosure button:
+// real aria-expanded state, Escape to close, focus moves into the menu on
+// open and back to the button on close, and an outside click dismisses it.
 interface Props {
   onHome?: boolean;
 }
@@ -16,11 +20,49 @@ const brandHref = onHome ? '#top' : '/';
       <span class="brand-mark">A</span>
       <span class="brand-name">AKINTAYO AKINNIBOSUN</span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" id="primary-nav" aria-label="Primary">
       <a href={`${base}#work`}>Work</a>
       <a href={`${base}#about`}>About</a>
       <a href={`${base}#contact`} class="nav-cta">Contact ↗</a>
     </nav>
-    <button class="nav-menu-btn" aria-label="Menu">Menu</button>
+    <button class="nav-menu-btn" aria-expanded="false" aria-controls="primary-nav">Menu</button>
   </div>
 </header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.nav');
+  const btn = header?.querySelector<HTMLButtonElement>('.nav-menu-btn');
+  const menu = document.getElementById('primary-nav');
+
+  if (header && btn && menu) {
+    const setOpen = (open: boolean) => {
+      header.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    };
+    const isOpen = () => btn.getAttribute('aria-expanded') === 'true';
+
+    btn.addEventListener('click', () => {
+      const next = !isOpen();
+      setOpen(next);
+      if (next) menu.querySelector<HTMLAnchorElement>('a')?.focus();
+    });
+
+    // Escape closes and returns focus to the trigger.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+
+    // Following a link closes the menu.
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    // A click outside the header closes it.
+    document.addEventListener('click', (e) => {
+      if (isOpen() && !header.contains(e.target as Node)) setOpen(false);
+    });
+  }
+</script>

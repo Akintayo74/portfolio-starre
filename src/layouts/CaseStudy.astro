@@ -16,7 +16,7 @@ const { title, description } = Astro.props;
 
 <Base title={title} description={description}>
   <Nav />
-  <main>
+  <main id="top" tabindex="-1">
     <slot />
   </main>
 
@@ -103,25 +103,5 @@ const { title, description } = Astro.props;
       window.addEventListener('resize', update, { passive: true });
       update();
     }
-  </script>
-
-  <script>
-    // Button shimmer — spawns a throwaway sweep span on each pointer-enter /
-    // focus. Fire-and-forget so a brief hover still plays the full sweep.
-    // Honors prefers-reduced-motion (CSS gates the visible sweep).
-    const DURATION = 1500;
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    const spawn = (btn: Element) => {
-      if (reduce && reduce.matches) return;
-      const s = document.createElement('span');
-      s.className = 'shimmer';
-      (s as HTMLElement).style.animationDuration = DURATION + 'ms';
-      btn.appendChild(s);
-      window.setTimeout(() => s.remove(), DURATION + 200);
-    };
-    document.querySelectorAll('.btn-shimmer').forEach((btn) => {
-      btn.addEventListener('mouseenter', () => spawn(btn));
-      btn.addEventListener('focus', () => spawn(btn));
-    });
   </script>
 </Base>
