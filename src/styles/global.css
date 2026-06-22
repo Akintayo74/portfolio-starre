@@ -172,7 +172,7 @@ main:focus { outline: none; }
   line-height: 0.99;
   letter-spacing: -0.035em;
   font-weight: 600;
-  max-width: 14ch;
+  max-width: 20ch;
   text-wrap: balance;
 }
 .hero h1 .mute { color: var(--mute); }
