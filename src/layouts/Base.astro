@@ -34,7 +34,7 @@ const favicon =
       // focus. Fire-and-forget so a brief hover still plays the full sweep.
       // Honors prefers-reduced-motion (CSS gates the visible sweep). Lives in
       // Base so any page with a .btn-shimmer button gets it.
-      const DURATION = 1500;
+      const DURATION = 1000;
       const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)');
       const spawn = (btn: Element) => {
         if (reduce && reduce.matches) return;

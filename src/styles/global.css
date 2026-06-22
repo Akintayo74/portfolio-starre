@@ -238,14 +238,14 @@ main:focus { outline: none; }
                 transparent,
                 rgba(255, 255, 255, 0.55),
                 transparent);
-    transform: translateX(0%);
+    transform: translateX(-100%);
     animation-name: btn-shimmer;
     animation-fill-mode: forwards;
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    animation-timing-function: ease;
   }
 }
 @keyframes btn-shimmer {
-  from { transform: translateX(0%); }
+  from { transform: translateX(-100%); }
   to   { transform: translateX(100%); }
 }
 
