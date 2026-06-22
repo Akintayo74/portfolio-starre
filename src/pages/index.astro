@@ -9,6 +9,9 @@ import Preview from '../components/Preview.astro';
 // Placeholders until real details land (see CLAUDE.md content TODOs).
 const CAL = 'https://cal.com/akintayo';
 const EMAIL = 'mailto:hello@akintayo.dev';
+
+// Hero accent sheen — swap to 'sheen-b' to compare the cool-steel variant.
+const sheen = 'sheen-a';
 ---
 
 <Base
@@ -21,7 +24,7 @@ const EMAIL = 'mailto:hello@akintayo.dev';
     <!-- ============ HERO ============ -->
     <section class="hero wrap">
       <p class="eyebrow">Frontend developer</p>
-      <h1>I build fast, accessible marketing sites <span class="mute">for devtools companies.</span></h1>
+      <h1>I build fast, accessible marketing sites <span class={`mute ${sheen}`}>for devtools companies.</span></h1>
       <p class="hero-lede">One person, from the first idea to the finished site. I care about how it reads, how fast it loads, and whether everyone can use it.</p>
       <div class="hero-actions">
         <Button href="#work" variant="primary">See the work</Button>
