@@ -1,5 +1,10 @@
 # Akintayo Akinnibosun — Portfolio (Astro)
 
+> **New / resuming session? Read [`HANDOFF.md`](./HANDOFF.md) first** — taste,
+> voice rules, how the user collaborates, the decision log, open loops (hero
+> animation A/B, manual a11y testing) and the remaining Phase 5 work. This file
+> holds the locked positioning, structure, and resolved details.
+
 A type-forward, strictly-monochrome portfolio that **is itself the sales pitch**.
 Built in Astro: the site dogfoods the performance + accessibility story it sells.
 
