@@ -178,16 +178,14 @@ main:focus { outline: none; }
 .hero h1 .mute { color: var(--mute); }
 
 /* ---- hero accent sheen: a slow light band sweeping through the grey
-   words. Luminance-only (option A) keeps it strictly monochrome; option B
-   carries a whisper of cool steel through the warm grey. Guarded so the
+   words. Luminance-only, so it stays strictly monochrome. Guarded so the
    text only goes transparent where background-clip:text is supported, and
    only animates when motion is allowed — otherwise it stays solid --mute.
    Every gradient stop is >= 3:1 on white (large text), so no frame drops
-   below AA. Swap the span's class (see index.astro) to compare A vs B. */
+   below AA. */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
   @media (prefers-reduced-motion: no-preference) {
-    .hero h1 .mute.sheen-a,
-    .hero h1 .mute.sheen-b {
+    .hero h1 .mute.sheen {
       color: transparent;
       -webkit-background-clip: text;
       background-clip: text;
@@ -195,16 +193,8 @@ main:focus { outline: none; }
       background-size: 200% 100%;
       background-position: 0% 0;
       animation: sheen-move 6s ease-in-out infinite alternate;
-    }
-    /* A — warm-grey luminance sheen */
-    .hero h1 .mute.sheen-a {
       background-image: linear-gradient(100deg,
         #6b6862 0%, #6b6862 42%, #8d897f 50%, #6b6862 58%, #6b6862 100%);
-    }
-    /* B — temperature shimmer: cool steel passing through warm grey */
-    .hero h1 .mute.sheen-b {
-      background-image: linear-gradient(100deg,
-        #6b6862 0%, #6b6862 42%, #8a90a0 50%, #6b6862 58%, #6b6862 100%);
     }
   }
 }
@@ -454,10 +444,6 @@ main:focus { outline: none; }
 .exp-yr { font-size: 18px; color: var(--mute); }
 .exp-role { font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; letter-spacing: -0.015em; }
 .exp-note { font-size: 17px; color: var(--mute); margin-top: 5px; }
-/* placeholder row \u2014 awaiting real history, clearly not a finished entry */
-.exp-row.placeholder { border-top-style: dashed; }
-.exp-row.placeholder .exp-yr { font-variant-numeric: tabular-nums; letter-spacing: 0.1em; opacity: 0.55; }
-.exp-row.placeholder .exp-role { color: var(--mute); font-weight: 500; }
 
 /* ============================================================
    CONTACT / FOOTER

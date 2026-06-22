@@ -122,11 +122,13 @@ dropped in gets the same scroll for free.
    NVDA, 200%/400% zoom, reduced motion, throttled mobile, no-JS).
 
 ## Content TODOs
-- Real **Cal.com** booking URL (currently placeholder `https://cal.com/akintayo`,
-  in `src/pages/index.astro` `CAL` const).
-- Real contact details (currently `hello@akintayo.dev`; Twitter/GitHub → `#top`).
-- Real experience history (the Experience section has a clearly-marked
-  placeholder row).
+- **Cal.com** URL (`cal.com/akintayo`), **email** (`hello@akintayo.dev`), and the
+  **social links** (X `akintayo074`, GitHub `Akintayo74`) are all real now. ✅
+- **Experience** is real: Independent (2026–now) + Frontend intern, Ixnote
+  Services (2025–now). Placeholder row + its CSS removed. ✅
+- **Hero sheen** resolved → option A (warm-grey luminance); `sheen-b` and the
+  toggle deleted, the class is now plain `.sheen`. ✅
+- Still open: a **SaaS-specific case study** (quality over quantity, 1–2 total).
 - Portrait was removed by choice (type-forward, devtools-aesthetic; a rushed
   photo would cost more credibility than it adds). Optional future touch: a
   small, tasteful b&w avatar near the About lede or contact — not a blocker.

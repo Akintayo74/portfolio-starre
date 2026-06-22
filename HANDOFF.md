@@ -109,21 +109,19 @@ brand", "bespoke", "synergy") repels this audience.
   it runs site-wide; it's on the Book-a-call CTAs.
 
 ## 8. Open loops (action needed)
-1. **Hero animation decision — A vs B.** An animated light "sheen" sweeps the
-   grey "for devtools companies." accent (continuous, 6s, ease-in-out alternate,
-   no JS, reduced-motion safe, every stop ≥3:1). Toggle via the `sheen` const in
-   `src/pages/index.astro`: `'sheen-a'` (warm-grey luminance, strictly mono) vs
-   `'sheen-b'` (whisper of cool steel — bends the no-color rule). **Once he
-   picks: delete the losing class from `global.css` and remove the toggle** so we
-   don't ship dead CSS. He may also want to tune speed / sheen lightness / band
-   width (the `42%`/`58%` stops) — all in the `.hero h1 .mute.sheen-*` rules.
+1. **Hero animation — decided: option A.** ✅ The warm-grey luminance "sheen"
+   sweeps the grey "for devtools companies." accent (6s, ease-in-out alternate,
+   no JS, reduced-motion safe, every stop ≥3:1). `sheen-b` and the toggle const
+   were deleted; the class is now plain `.sheen` (tune speed / lightness / band
+   width via the `42%`/`58%` stops in the `.hero h1 .mute.sheen` rule).
 2. **Manual accessibility testing.** The user will run `ACCESSIBILITY.md` on real
    hardware + screen readers (VoiceOver/NVDA). Fix whatever surfaces. This is the
    point — automated checks are only the floor.
-3. **Real content** (placeholders live now): real **Cal.com** URL (`CAL` const)
-   and email (currently `hello@akintayo.dev`; Twitter/GitHub → `#top`); real
-   **experience** history (Experience has a clearly-marked placeholder row);
-   eventually a **SaaS-specific case study** (quality over quantity, 1–2 total).
+3. **Real content — done.** ✅ Cal.com (`cal.com/akintayo`), email
+   (`hello@akintayo.dev`), socials (X `akintayo074`, GitHub `Akintayo74`), and
+   the Experience section (Independent 2026–now + Ixnote Services frontend intern
+   2025–now) are all real; placeholder row removed. Still open: a
+   **SaaS-specific case study** (quality over quantity, 1–2 total).
 
 ## 9. Remaining — Phase 5 (ship)
 - **Performance budget** + verify the dogfooding claims hold (it's static, near-
