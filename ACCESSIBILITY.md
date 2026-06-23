@@ -54,7 +54,7 @@ it on — navigate by landmarks, then by headings, then read in order.
   heading and confirm it tells the story.
 - ☐ **Decorative previews are silent** — the browser-frame wireframes
   (`aria-hidden`) are NOT announced. You should never hear "image" or the fake
-  URL like "centreforearthworks.org".
+  URL like "cearthworks.org".
 - ☐ **Links make sense out of context** — the case-card link announces its
   heading + summary, not "link, link, link". CTAs read "Book a call",
   "Email me", etc.
